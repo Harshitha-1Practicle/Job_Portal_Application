@@ -1,0 +1,54 @@
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #1c3026;
+  background: #f2f3eb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #f2f3eb;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(114, 151, 81, 0.55);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: #17392c;
+  background: #d8f27a;
+}
+
+#root {
+  min-height: 100vh;
+}
