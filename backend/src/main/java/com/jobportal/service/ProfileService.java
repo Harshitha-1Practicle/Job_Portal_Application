@@ -5,6 +5,7 @@ import com.jobportal.model.Profile;
 import com.jobportal.model.User;
 import com.jobportal.repository.ProfileRepository;
 import com.jobportal.repository.UserRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +19,7 @@ public class ProfileService {
         this.userRepository = userRepository;
     }
 
-    public Profile getProfile(Long userId) {
+    public Profile getProfile(@NonNull Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
 
@@ -30,7 +31,7 @@ public class ProfileService {
                 });
     }
 
-    public Profile updateProfile(Long userId, Profile updatedProfile) {
+    public Profile updateProfile(@NonNull Long userId, Profile updatedProfile) {
         Profile existing = getProfile(userId);
         existing.setEducation(updatedProfile.getEducation());
         existing.setSkills(updatedProfile.getSkills());

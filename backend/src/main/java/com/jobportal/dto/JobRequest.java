@@ -1,32 +1,47 @@
 package com.jobportal.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class JobRequest {
     @NotBlank
+    @Size(max = 255)
     private String title;
 
     @NotBlank
+    @Size(max = 255)
     private String company;
 
     @NotBlank
+    @Size(max = 255)
     private String location;
 
     @NotBlank
+    @Size(max = 255)
     private String jobType;
 
     @NotBlank
+    @Size(max = 255)
     private String salary;
 
     @NotBlank
+    @Size(max = 255)
     private String experience;
 
     @NotBlank
+    @Size(max = 4000)
     private String description;
 
+    @Size(max = 4000)
     private String responsibilities;
+
+    @Size(max = 2000)
     private String skills;
+
+    @Size(max = 2000)
     private String qualifications;
+
+    @Size(max = 2000)
     private String benefits;
 
     public String getTitle() {

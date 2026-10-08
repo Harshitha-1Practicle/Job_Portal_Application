@@ -1,5 +1,7 @@
 package com.jobportal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,6 +28,7 @@ public class User {
 
     @NotBlank
     @Size(min = 6)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String phone;
@@ -41,12 +44,15 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Job> jobs = new HashSet<>();
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Application> applications = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Profile profile;
 
     public User() {

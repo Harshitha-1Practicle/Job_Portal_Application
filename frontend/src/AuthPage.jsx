@@ -4,12 +4,19 @@ import { Link } from 'react-router-dom'
 import { apiRequest } from './api'
 import './AuthPage.css'
 
+const t = (str) => str
+
 export default function AuthPage({ mode, onAuthenticated }) {
   const registering = mode === 'register'
+  const roleOptions = [
+    { value: 'ROLE_JOB_SEEKER', label: t('Job seeker') },
+    { value: 'ROLE_RECRUITER', label: t('Recruiter') },
+  ]
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [selectedRole, setSelectedRole] = useState('ROLE_JOB_SEEKER')
   const [openRoles, setOpenRoles] = useState(null)
   const [featureJob, setFeatureJob] = useState(null)
 
@@ -41,7 +48,7 @@ export default function AuthPage({ mode, onAuthenticated }) {
       const result = await apiRequest(`/api/auth/${registering ? 'register' : 'login'}`, {
         method: 'POST',
         body: JSON.stringify(registering
-          ? { name: values.name.trim(), email: values.email.trim().toLowerCase(), password: values.password, role: 'ROLE_JOB_SEEKER' }
+          ? { name: values.name.trim(), email: values.email.trim().toLowerCase(), password: values.password, role: selectedRole }
           : { email: values.email.trim().toLowerCase(), password: values.password }),
       })
       onAuthenticated({ token: result.token, email: result.email, role: result.role })
@@ -103,7 +110,7 @@ export default function AuthPage({ mode, onAuthenticated }) {
         <div className="auth-form-wrap">
           <p className="auth-kicker">{registering ? 'YOUR NEXT CHAPTER' : 'WELCOME BACK'}</p>
           <h2>{registering ? 'Make space for better work.' : 'Pick up where you left off.'}</h2>
-          <p className="auth-subtitle">{registering ? 'Create your job seeker account. Your applications stay organized from day one.' : 'Sign in to explore roles and see how your applications are moving.'}</p>
+          <p className="auth-subtitle">{registering ? 'Choose a job seeker or recruiter account. Admin accounts are provisioned separately.' : 'Sign in to explore roles and see how your applications are moving.'}</p>
 
           <div className="auth-mode-switch" aria-label="Account access">
             <Link className={!registering ? 'selected' : ''} to="/sign-in">Sign in</Link>
@@ -112,24 +119,43 @@ export default function AuthPage({ mode, onAuthenticated }) {
 
           <form className="auth-form" onSubmit={handleSubmit} aria-busy={busy}>
             {registering && (
-              <label className="auth-label" htmlFor="auth-name">Full name
-                <input id="auth-name" name="name" type="text" autoComplete="name" placeholder="Your name" maxLength="120" required />
+              <label className="auth-label" htmlFor="auth-name">{t('Full name')}
+                <input id="auth-name" name="name" type="text" autoComplete="name" placeholder={t('Your name')} maxLength="120" required />
               </label>
             )}
-            <label className="auth-label" htmlFor="auth-email">Email address
-              <span className="auth-input-icon"><Mail size={17} aria-hidden="true" /><input id="auth-email" name="email" type="email" autoComplete="email" autoCapitalize="none" spellCheck="false" placeholder="name@example.com" required /></span>
+            {registering && (
+              <div className="auth-label" aria-label={t('Select account type')}>
+                <span>{t('Account type')}</span>
+                <div className="auth-role-grid" role="radiogroup" aria-label={t('Choose your workspace role')}>
+                  {roleOptions.map((option) => (
+                    <label key={option.value} className={`auth-role-option ${selectedRole === option.value ? 'selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="role"
+                        value={option.value}
+                        checked={selectedRole === option.value}
+                        onChange={() => setSelectedRole(option.value)}
+                      />
+                      <span>{t(option.label)}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+            <label className="auth-label" htmlFor="auth-email">{t('Email address')}
+              <span className="auth-input-icon"><Mail size={17} aria-hidden="true" /><input id="auth-email" name="email" type="email" autoComplete="email" autoCapitalize="none" spellCheck="false" placeholder={t('name@example.com')} required /></span>
             </label>
-            <label className="auth-label" htmlFor="auth-password">Password
-              <span className="auth-input-icon"><LockKeyhole size={17} aria-hidden="true" /><input id="auth-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete={registering ? 'new-password' : 'current-password'} minLength={registering ? 6 : undefined} placeholder={registering ? 'At least 6 characters' : 'Enter your password'} required />
-                <button className="auth-password-toggle" type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'} title={showPassword ? 'Hide password' : 'Show password'}>
+            <label className="auth-label" htmlFor="auth-password">{t('Password')}
+              <span className="auth-input-icon"><LockKeyhole size={17} aria-hidden="true" /><input id="auth-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete={registering ? 'new-password' : 'current-password'} minLength={registering ? 6 : undefined} placeholder={registering ? t('At least 6 characters') : t('Enter your password')} required />
+                <button className="auth-password-toggle" type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? t('Hide password') : t('Show password')} title={showPassword ? t('Hide password') : t('Show password')}>
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </span>
             </label>
             {registering && (
-              <label className="auth-label" htmlFor="auth-confirm-password">Confirm password
-                <span className="auth-input-icon"><LockKeyhole size={17} aria-hidden="true" /><input id="auth-confirm-password" name="confirmPassword" type={showConfirmPassword ? 'text' : 'password'} autoComplete="new-password" minLength="6" placeholder="Enter it once more" required />
-                  <button className="auth-password-toggle" type="button" onClick={() => setShowConfirmPassword((visible) => !visible)} aria-label={showConfirmPassword ? 'Hide confirmation password' : 'Show confirmation password'} title={showConfirmPassword ? 'Hide confirmation password' : 'Show confirmation password'}>
+              <label className="auth-label" htmlFor="auth-confirm-password">{t('Confirm password')}
+                <span className="auth-input-icon"><LockKeyhole size={17} aria-hidden="true" /><input id="auth-confirm-password" name="confirmPassword" type={showConfirmPassword ? 'text' : 'password'} autoComplete="new-password" minLength="6" placeholder={t('Enter it once more')} required />
+                  <button className="auth-password-toggle" type="button" onClick={() => setShowConfirmPassword((visible) => !visible)} aria-label={showConfirmPassword ? t('Hide confirmation password') : t('Show confirmation password')} title={showConfirmPassword ? t('Hide confirmation password') : t('Show confirmation password')}>
                     {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </span>
@@ -143,7 +169,7 @@ export default function AuthPage({ mode, onAuthenticated }) {
           </form>
 
           {registering ? (
-            <p className="auth-assurance"><Check size={14} /> Job seeker account · No recruiter access is granted at sign-up</p>
+            <p className="auth-assurance"><Check size={14} /> {roleOptions.find((option) => option.value === selectedRole)?.label ?? 'Job seeker'} account · Your workspace role is set at signup.</p>
           ) : (
             <p className="auth-assurance"><LockKeyhole size={13} /> Your account details are sent securely to your workspace.</p>
           )}

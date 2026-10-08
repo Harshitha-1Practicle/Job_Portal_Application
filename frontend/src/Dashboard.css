@@ -513,6 +513,8 @@
   background: #355c3d;
 }
 
+.management-heading-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; }
+.management-heading-actions button { font-family: inherit; cursor: pointer; }
 .dashboard-primary-link:hover { background: #416d48; }
 .text-link:hover { text-decoration: underline; }
 
@@ -752,6 +754,12 @@
 
 .dashboard-job-card:hover { border-color: #aab99d; }
 .dashboard-job-card.selected { border-color: #8ea57a; box-shadow: inset 3px 0 #7f9a65; }
+.management-job-list { display: grid; gap: 7px; }
+.management-job-card { align-items: center; cursor: default; }
+.management-job-salary { flex: 0 0 auto; color: #6c7d6d; font-size: 8px; text-align: right; }
+.management-application-list { display: grid; }
+.management-application-list .dashboard-application-row { padding: 9px 0; border-bottom: 1px solid #edf0e9; }
+.management-application-list .dashboard-application-row:last-child { border-bottom: 0; }
 .job-company-monogram { width: 34px; height: 34px; border-radius: 8px; font-size: 9px; }
 .dashboard-job-summary { display: grid; min-width: 0; flex: 1; gap: 3px; }
 .dashboard-company-name { overflow: hidden; color: #79867b; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
@@ -851,6 +859,17 @@
 .dashboard-application-row.detailed .application-row-main small { font-size: 8px; }
 .dashboard-application-row.detailed .application-date { min-width: 100px; font-size: 8px; }
 .dashboard-application-row.detailed .application-status { min-width: 88px; text-align: center; }
+.manager-application-record { border-bottom: 1px solid #edf0e9; }
+.manager-application-record:last-child { border-bottom: 0; }
+.manager-application-record > .dashboard-application-row.detailed { border-bottom: 0; }
+.manager-status-control { display: flex; min-height: 39px; align-items: center; justify-content: flex-end; gap: 8px; padding: 0 14px 8px; }
+.manager-status-control label { display: flex; align-items: center; gap: 7px; color: #6e7f70; font-size: 8px; font-weight: 700; }
+.manager-status-control select,
+.job-editor-form select { min-height: 31px; padding: 0 8px; border: 1px solid #dce3d8; border-radius: 5px; color: #34493a; background: #fffefa; font: inherit; }
+.manager-status-save { display: inline-flex; min-height: 31px; align-items: center; gap: 5px; padding: 0 9px; border: 1px solid #dce3d8; border-radius: 5px; color: #345c3e; background: #f5f8f0; font-size: 8px; font-weight: 700; cursor: pointer; }
+.manager-status-save:hover:not(:disabled) { border-color: #a9ba9d; background: #edf4e5; }
+.manager-status-save:disabled { opacity: 0.55; cursor: default; }
+.manager-status-error { color: #a14f3b; font-size: 8px; }
 .application-data-note { display: flex; align-items: flex-start; gap: 6px; margin: 0; padding: 10px 13px; border-top: 1px solid #edf0e9; color: #859086; font-size: 8px; line-height: 1.45; }
 .application-data-note svg { flex: 0 0 auto; color: #9a9e7b; }
 
@@ -877,6 +896,10 @@
   animation: dashboard-enter 200ms ease both;
 }
 
+.job-editor-modal { width: min(100%, 580px); max-height: calc(100vh - 36px); overflow-y: auto; }
+.job-editor-form { margin-top: 15px; }
+.job-editor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
 .dashboard-modal-close {
   position: absolute;
   top: 13px;
@@ -900,7 +923,8 @@
 .apply-form label { display: grid; gap: 6px; color: #56695b; font-size: 9px; font-weight: 700; }
 .apply-form label > span { display: inline; margin-left: 5px; color: #99a49a; font-size: 7px; letter-spacing: 0.8px; }
 .apply-form input,
-.apply-form textarea { width: 100%; min-height: 38px; padding: 9px 10px; border: 1px solid #dfe5dc; border-radius: 5px; outline: 0; color: #283c2e; background: #fff; font-size: 9px; font-weight: 400; }
+.apply-form textarea,
+.apply-form select { width: 100%; min-height: 38px; padding: 9px 10px; border: 1px solid #dfe5dc; border-radius: 5px; outline: 0; color: #283c2e; background: #fff; font-size: 9px; font-weight: 400; }
 .apply-form textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
 .apply-form input:focus,
 .apply-form textarea:focus { border-color: #91a87b; box-shadow: 0 0 0 3px rgba(138, 163, 107, 0.12); }
@@ -973,6 +997,10 @@
   .dashboard-page-heading { min-height: 75px; }
   .heading-open-count { padding-left: 9px; }
   .heading-open-count strong { font-size: 22px; }
+  .management-heading-actions { gap: 6px; }
+  .management-heading-actions .dashboard-primary-link { gap: 4px; padding: 0 7px; font-size: 8px; }
+  .job-editor-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .manager-status-control { justify-content: flex-start; flex-wrap: wrap; padding-right: 9px; padding-left: 9px; }
   .dashboard-application-row { gap: 6px; }
   .application-row-icon { width: 27px; height: 27px; }
   .application-date { font-size: 7px; }

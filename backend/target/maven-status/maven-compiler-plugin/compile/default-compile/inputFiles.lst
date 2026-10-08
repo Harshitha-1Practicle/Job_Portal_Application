@@ -15,6 +15,7 @@ C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com
 C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\dto\JobRequest.java
 C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\dto\LoginRequest.java
 C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\dto\RegisterRequest.java
+C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\exception\DuplicateApplicationException.java
 C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\exception\EmailAlreadyRegisteredException.java
 C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\exception\ResourceNotFoundException.java
 C:\Users\hp\Desktop\Job Application Tracker\job-portal\backend\src\main\java\com\jobportal\JobPortalApplication.java

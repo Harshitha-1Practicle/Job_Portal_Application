@@ -1,6 +1,7 @@
 package com.jobportal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -154,6 +155,16 @@ public class Job {
 
     public void setRecruiter(User recruiter) {
         this.recruiter = recruiter;
+    }
+
+    @JsonProperty("recruiterId")
+    public Long getRecruiterId() {
+        return recruiter != null ? recruiter.getId() : null;
+    }
+
+    @JsonProperty("recruiterName")
+    public String getRecruiterName() {
+        return recruiter != null ? recruiter.getName() : null;
     }
 
     public LocalDateTime getCreatedAt() {

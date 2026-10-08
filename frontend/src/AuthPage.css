@@ -338,6 +338,42 @@
   font-weight: 700;
 }
 
+.auth-role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.auth-role-option {
+  position: relative;
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  border: 1px solid #dce3d8;
+  border-radius: 6px;
+  color: #55705b;
+  background: #fffefa;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+.auth-role-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.auth-role-option.selected {
+  border-color: #244934;
+  color: #183b2d;
+  background: #edf6e7;
+  box-shadow: 0 0 0 2px rgba(36, 73, 52, 0.09);
+}
+
 .auth-label > input,
 .auth-input-icon {
   width: 100%;

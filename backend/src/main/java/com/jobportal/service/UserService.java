@@ -6,6 +6,7 @@ import com.jobportal.exception.ResourceNotFoundException;
 import com.jobportal.model.Role;
 import com.jobportal.model.User;
 import com.jobportal.repository.UserRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -31,8 +33,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+            .orElseGet(() -> userRepository.findByEmail(normalizedEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + normalizedEmail)));
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : user.getRoles()) {
@@ -47,13 +51,17 @@ public class UserService implements UserDetailsService {
     }
 
     public User register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+        String normalizedEmail = request.getEmail().trim().toLowerCase(Locale.ROOT);
+        if (userRepository.existsByEmail(normalizedEmail)) {
             throw new EmailAlreadyRegisteredException();
+        }
+        if (request.getRole() == Role.ROLE_ADMIN) {
+            throw new IllegalArgumentException("Admin accounts can only be provisioned by an administrator.");
         }
 
         User user = new User();
         user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhone(request.getPhone());
         user.setLocation(request.getLocation());
@@ -71,12 +79,12 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User findById(Long id) {
+    public User findById(@NonNull Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
-    public User updateUser(Long id, User updatedUser) {
+    public User updateUser(@NonNull Long id, User updatedUser) {
         User existing = findById(id);
         existing.setName(updatedUser.getName());
         existing.setPhone(updatedUser.getPhone());
@@ -87,7 +95,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(existing);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(@NonNull Long id) {
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User not found with id: " + id);
         }

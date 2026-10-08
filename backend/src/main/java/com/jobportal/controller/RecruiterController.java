@@ -6,6 +6,7 @@ import com.jobportal.model.User;
 import com.jobportal.service.ApplicationService;
 import com.jobportal.service.JobService;
 import com.jobportal.service.UserService;
+import java.util.Objects;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +33,13 @@ public class RecruiterController {
     public List<Job> getRecruiterJobs() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User recruiter = userService.findByEmail(authentication.getName());
-        return jobService.getRecruiterJobs(recruiter.getId());
+        return jobService.getRecruiterJobs(Objects.requireNonNull(recruiter.getId()));
     }
 
     @GetMapping("/applications")
     public List<Application> getRecruiterApplications() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User recruiter = userService.findByEmail(authentication.getName());
-        return applicationService.getApplicationsForRecruiter(recruiter.getId());
+        return applicationService.getApplicationsForRecruiter(Objects.requireNonNull(recruiter.getId()));
     }
 }

@@ -1,16 +1,26 @@
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '')
+
 export async function apiRequest(path, options = {}) {
+  if (typeof path !== 'string' || !path.startsWith('/')) throw new Error('API path must be a relative path starting with /')
+
   const headers = new Headers(options.headers ?? {})
   if (options.body) headers.set('Content-Type', 'application/json')
   if (options.token) headers.set('Authorization', `Bearer ${options.token}`)
 
-  const response = await fetch(path, { ...options, headers })
+  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers })
   if (response.status === 204) return null
 
   const payload = await response.json().catch(() => null)
   if (!response.ok) {
-    const message = payload?.message
+    const details = payload?.errors
+    const validationMessage = Array.isArray(details)
+      ? details.map((item) => item.defaultMessage).filter(Boolean).join(', ')
+      : details && typeof details === 'object'
+        ? Object.entries(details).map(([field, message]) => `${field}: ${message}`).join(', ')
+        : null
+    const message = (payload?.message && payload.message !== 'Validation failed' ? payload.message : null)
+      ?? validationMessage
       ?? payload?.error
-      ?? (Array.isArray(payload?.errors) ? payload.errors.map((item) => item.defaultMessage).join(', ') : null)
       ?? `Request failed (${response.status})`
     const error = new Error(message)
     error.status = response.status

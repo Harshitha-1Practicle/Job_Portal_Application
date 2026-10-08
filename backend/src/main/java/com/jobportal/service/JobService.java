@@ -6,6 +6,8 @@ import com.jobportal.model.Job;
 import com.jobportal.model.User;
 import com.jobportal.repository.JobRepository;
 import com.jobportal.repository.UserRepository;
+import org.springframework.lang.NonNull;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +24,11 @@ public class JobService {
     }
 
     public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+        return jobRepository.findAllWithRecruiter();
     }
 
-    public Job getJobById(Long id) {
-        return jobRepository.findById(id)
+    public Job getJobById(@NonNull Long id) {
+        return jobRepository.findJobWithRecruiterById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + id));
     }
 
@@ -37,7 +39,7 @@ public class JobService {
         return jobRepository.findByTitleContainingIgnoreCaseOrSkillsContainingIgnoreCase(keyword, keyword);
     }
 
-    public Job createJob(Long recruiterId, JobRequest request) {
+    public Job createJob(@NonNull Long recruiterId, JobRequest request) {
         User recruiter = userRepository.findById(recruiterId)
                 .orElseThrow(() -> new ResourceNotFoundException("Recruiter not found with id: " + recruiterId));
 
@@ -57,10 +59,10 @@ public class JobService {
         return jobRepository.save(job);
     }
 
-    public Job updateJob(Long jobId, Long recruiterId, JobRequest request) {
+    public Job updateJob(@NonNull Long jobId, @NonNull Long recruiterId, JobRequest request) {
         Job existing = getJobById(jobId);
         if (!existing.getRecruiter().getId().equals(recruiterId)) {
-            throw new IllegalArgumentException("This recruiter is not allowed to update this job");
+            throw new AccessDeniedException("This recruiter is not allowed to update this job");
         }
 
         existing.setTitle(request.getTitle());
@@ -78,15 +80,15 @@ public class JobService {
         return jobRepository.save(existing);
     }
 
-    public void deleteJob(Long jobId, Long recruiterId) {
+    public void deleteJob(@NonNull Long jobId, @NonNull Long recruiterId) {
         Job job = getJobById(jobId);
         if (!job.getRecruiter().getId().equals(recruiterId)) {
-            throw new IllegalArgumentException("This recruiter is not allowed to delete this job");
+            throw new AccessDeniedException("This recruiter is not allowed to delete this job");
         }
         jobRepository.delete(job);
     }
 
-    public List<Job> getRecruiterJobs(Long recruiterId) {
+    public List<Job> getRecruiterJobs(@NonNull Long recruiterId) {
         User recruiter = userRepository.findById(recruiterId)
                 .orElseThrow(() -> new ResourceNotFoundException("Recruiter not found with id: " + recruiterId));
         return jobRepository.findByRecruiter(recruiter);

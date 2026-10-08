@@ -1,6 +1,7 @@
 package com.jobportal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -58,6 +59,21 @@ public class Application {
 
     public void setApplicant(User applicant) {
         this.applicant = applicant;
+    }
+
+    @JsonProperty("applicantId")
+    public Long getApplicantId() {
+        return applicant != null ? applicant.getId() : null;
+    }
+
+    @JsonProperty("applicantName")
+    public String getApplicantName() {
+        return applicant != null ? applicant.getName() : null;
+    }
+
+    @JsonProperty("applicantEmail")
+    public String getApplicantEmail() {
+        return applicant != null ? applicant.getEmail() : null;
     }
 
     public String getResume() {

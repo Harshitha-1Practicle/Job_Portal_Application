@@ -33,5 +33,4 @@ com\jobportal\controller\AdminController.class
 com\jobportal\config\SampleDataInitializer.class
 com\jobportal\model\ApplicationStatus.class
 com\jobportal\model\Role.class
-com\jobportal\config\SecurityConfig$1.class
 com\jobportal\dto\LoginRequest.class
