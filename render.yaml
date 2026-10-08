@@ -9,4 +9,4 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ALLOWED_ORIGINS
-        value: https://job-portal-harshitha.netlify.app
+        value: https://fascinating-fox-4a1df7.netlify.app
