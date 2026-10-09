@@ -9,7 +9,7 @@ NODE_VERSION = "24"
 # Proxy /api/* → Render backend (set RENDER_BACKEND_URL in Netlify env vars)
 [[redirects]]
 from = "/api/*"
-to = "https://job-portal-application-qc9v.onrender.com/api/:splat"
+to = "https://job-portal-backend-v4s3.onrender.com/api/:splat"
 status = 200
 force = true
 
