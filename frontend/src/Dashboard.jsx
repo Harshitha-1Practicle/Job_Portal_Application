@@ -38,13 +38,19 @@ function getAccountRoleLabel(value) {
   const role = String(value ?? '').toUpperCase()
   if (role === 'ROLE_ADMIN') return 'Admin'
   if (role === 'ROLE_RECRUITER') return 'Recruiter'
-  return 'Job seeker'
+  if (role === 'ROLE_HR_MANAGER') return 'HR Manager'
+  if (role === 'ROLE_INTERVIEWER') return 'Interviewer'
+  if (role === 'ROLE_COMPANY_ADMIN') return 'Company Admin'
+  return 'Job Seeker'
 }
 
 function getRoleMode(value) {
   const role = String(value ?? '').toUpperCase()
   if (role === 'ROLE_ADMIN') return 'admin'
+  if (role === 'ROLE_COMPANY_ADMIN') return 'admin'
   if (role === 'ROLE_RECRUITER') return 'recruiter'
+  if (role === 'ROLE_HR_MANAGER') return 'recruiter'
+  if (role === 'ROLE_INTERVIEWER') return 'recruiter'
   return 'seeker'
 }
 

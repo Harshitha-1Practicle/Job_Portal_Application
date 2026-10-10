@@ -9,8 +9,10 @@ const t = (str) => str
 export default function AuthPage({ mode, onAuthenticated }) {
   const registering = mode === 'register'
   const roleOptions = [
-    { value: 'ROLE_JOB_SEEKER', label: t('Job seeker') },
+    { value: 'ROLE_JOB_SEEKER', label: t('Job Seeker') },
     { value: 'ROLE_RECRUITER', label: t('Recruiter') },
+    { value: 'ROLE_HR_MANAGER', label: t('HR Manager') },
+    { value: 'ROLE_INTERVIEWER', label: t('Interviewer') },
   ]
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')

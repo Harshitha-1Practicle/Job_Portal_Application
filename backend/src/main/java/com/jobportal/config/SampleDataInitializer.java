@@ -34,9 +34,12 @@ public class SampleDataInitializer implements CommandLineRunner {
     }
 
     private void seedUsers() {
-        createUserIfAbsent("Admin User",     "admin@jobconnect.com",     "admin123",     "Bangalore", Set.of(Role.ROLE_ADMIN));
-        createUserIfAbsent("Recruiter User", "recruiter@jobconnect.com", "recruiter123", "Hyderabad", Set.of(Role.ROLE_RECRUITER));
-        createUserIfAbsent("Job Seeker",     "seeker@jobconnect.com",    "seeker123",    "Chennai",   Set.of(Role.ROLE_JOB_SEEKER));
+        createUserIfAbsent("Admin User",        "admin@jobconnect.com",        "admin123",        "Bangalore", Set.of(Role.ROLE_ADMIN));
+        createUserIfAbsent("Recruiter User",    "recruiter@jobconnect.com",    "recruiter123",    "Hyderabad", Set.of(Role.ROLE_RECRUITER));
+        createUserIfAbsent("Job Seeker",        "seeker@jobconnect.com",       "seeker123",       "Chennai",   Set.of(Role.ROLE_JOB_SEEKER));
+        createUserIfAbsent("HR Manager",        "hr@jobconnect.com",           "hr123",           "Mumbai",    Set.of(Role.ROLE_HR_MANAGER));
+        createUserIfAbsent("Interviewer",       "interviewer@jobconnect.com",  "interviewer123",  "Pune",      Set.of(Role.ROLE_INTERVIEWER));
+        createUserIfAbsent("Company Admin",     "companyadmin@jobconnect.com", "companyadmin123", "Delhi",     Set.of(Role.ROLE_COMPANY_ADMIN));
     }
 
     private void seedJobs() {
