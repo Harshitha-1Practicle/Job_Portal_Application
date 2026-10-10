@@ -67,7 +67,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handleUnreadableRequest(HttpMessageNotReadableException ex) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, "Request body contains invalid or unsupported values");
+        String message = "Request body contains invalid or unsupported values";
+        Throwable cause = ex.getCause();
+        if (cause instanceof com.fasterxml.jackson.databind.exc.InvalidFormatException ife
+                && ife.getTargetType() != null
+                && ife.getTargetType().isEnum()) {
+            message = "Invalid value '" + ife.getValue() + "' for field '" + ife.getPath().stream()
+                    .map(ref -> ref.getFieldName())
+                    .filter(f -> f != null)
+                    .reduce((a, b) -> b).orElse("unknown") + "'";
+        }
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, message);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)

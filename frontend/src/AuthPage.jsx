@@ -68,8 +68,6 @@ export default function AuthPage({ mode, onAuthenticated }) {
         setError('That email and password do not match. Check them and try again.')
       } else if (requestError.status === 409) {
         setError('An account with this email already exists. Sign in instead.')
-      } else if (requestError.status >= 500) {
-        setError('Something went wrong on our end. Please try again in a moment.')
       } else {
         setError(requestError.message || 'We could not complete your request. Please try again.')
       }
