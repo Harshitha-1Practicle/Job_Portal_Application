@@ -34,12 +34,21 @@ public class SampleDataInitializer implements CommandLineRunner {
     }
 
     private void seedUsers() {
-        createUserIfAbsent("Admin User",        "admin@jobconnect.com",        "admin123",        "Bangalore", Set.of(Role.ROLE_ADMIN));
-        createUserIfAbsent("Recruiter User",    "recruiter@jobconnect.com",    "recruiter123",    "Hyderabad", Set.of(Role.ROLE_RECRUITER));
-        createUserIfAbsent("Job Seeker",        "seeker@jobconnect.com",       "seeker123",       "Chennai",   Set.of(Role.ROLE_JOB_SEEKER));
-        createUserIfAbsent("HR Manager",        "hr@jobconnect.com",           "hr123",           "Mumbai",    Set.of(Role.ROLE_HR_MANAGER));
-        createUserIfAbsent("Interviewer",       "interviewer@jobconnect.com",  "interviewer123",  "Pune",      Set.of(Role.ROLE_INTERVIEWER));
-        createUserIfAbsent("Company Admin",     "companyadmin@jobconnect.com", "companyadmin123", "Delhi",     Set.of(Role.ROLE_COMPANY_ADMIN));
+        createUserIfAbsent("Admin User",          "admin@jobconnect.com",          "admin123",          "Bangalore", Set.of(Role.ROLE_ADMIN));
+        createUserIfAbsent("Recruiter User",      "recruiter@jobconnect.com",      "recruiter123",      "Hyderabad", Set.of(Role.ROLE_RECRUITER));
+        createUserIfAbsent("Job Seeker",          "seeker@jobconnect.com",         "seeker123",         "Chennai",   Set.of(Role.ROLE_JOB_SEEKER));
+        createUserIfAbsent("HR Manager",          "hr@jobconnect.com",             "hr123",             "Mumbai",    Set.of(Role.ROLE_HR_MANAGER));
+        createUserIfAbsent("Interviewer",         "interviewer@jobconnect.com",    "interviewer123",    "Pune",      Set.of(Role.ROLE_INTERVIEWER));
+        createUserIfAbsent("Company Admin",       "companyadmin@jobconnect.com",   "companyadmin123",   "Delhi",     Set.of(Role.ROLE_COMPANY_ADMIN));
+        createUserIfAbsent("Hiring Manager",      "hiringmgr@jobconnect.com",      "hiringmgr123",      "Bangalore", Set.of(Role.ROLE_HIRING_MANAGER));
+        createUserIfAbsent("Technical Lead",      "techlead@jobconnect.com",       "techlead123",       "Hyderabad", Set.of(Role.ROLE_TECHNICAL_LEAD));
+        createUserIfAbsent("Sourcer",             "sourcer@jobconnect.com",        "sourcer123",        "Mumbai",    Set.of(Role.ROLE_SOURCER));
+        createUserIfAbsent("Department Head",     "depthead@jobconnect.com",       "depthead123",       "Chennai",   Set.of(Role.ROLE_DEPARTMENT_HEAD));
+        createUserIfAbsent("Finance Manager",     "finance@jobconnect.com",        "finance123",        "Pune",      Set.of(Role.ROLE_FINANCE_MANAGER));
+        createUserIfAbsent("Fresher",             "fresher@jobconnect.com",        "fresher123",        "Delhi",     Set.of(Role.ROLE_FRESHER));
+        createUserIfAbsent("Experienced Pro",     "experienced@jobconnect.com",    "experienced123",    "Bangalore", Set.of(Role.ROLE_EXPERIENCED));
+        createUserIfAbsent("Moderator",           "moderator@jobconnect.com",      "moderator123",      "Hyderabad", Set.of(Role.ROLE_MODERATOR));
+        createUserIfAbsent("Support Agent",       "support@jobconnect.com",        "support123",        "Mumbai",    Set.of(Role.ROLE_SUPPORT_AGENT));
     }
 
     private void seedJobs() {

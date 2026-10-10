@@ -9,10 +9,17 @@ const t = (str) => str
 export default function AuthPage({ mode, onAuthenticated }) {
   const registering = mode === 'register'
   const roleOptions = [
-    { value: 'ROLE_JOB_SEEKER', label: t('Job Seeker') },
-    { value: 'ROLE_RECRUITER', label: t('Recruiter') },
-    { value: 'ROLE_HR_MANAGER', label: t('HR Manager') },
-    { value: 'ROLE_INTERVIEWER', label: t('Interviewer') },
+    { value: 'ROLE_JOB_SEEKER',   label: t('Job Seeker') },
+    { value: 'ROLE_FRESHER',      label: t('Fresher') },
+    { value: 'ROLE_EXPERIENCED',  label: t('Experienced Professional') },
+    { value: 'ROLE_RECRUITER',    label: t('Recruiter') },
+    { value: 'ROLE_HR_MANAGER',   label: t('HR Manager') },
+    { value: 'ROLE_INTERVIEWER',  label: t('Interviewer') },
+    { value: 'ROLE_HIRING_MANAGER', label: t('Hiring Manager') },
+    { value: 'ROLE_TECHNICAL_LEAD', label: t('Technical Lead') },
+    { value: 'ROLE_SOURCER',      label: t('Sourcer') },
+    { value: 'ROLE_FINANCE_MANAGER', label: t('Finance Manager') },
+    { value: 'ROLE_SUPPORT_AGENT', label: t('Support Agent') },
   ]
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')

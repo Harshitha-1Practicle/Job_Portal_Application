@@ -36,21 +36,33 @@ const FILTERS = ['All roles', 'Full time', 'Internships', 'Remote']
 
 function getAccountRoleLabel(value) {
   const role = String(value ?? '').toUpperCase()
-  if (role === 'ROLE_ADMIN') return 'Admin'
-  if (role === 'ROLE_RECRUITER') return 'Recruiter'
-  if (role === 'ROLE_HR_MANAGER') return 'HR Manager'
-  if (role === 'ROLE_INTERVIEWER') return 'Interviewer'
-  if (role === 'ROLE_COMPANY_ADMIN') return 'Company Admin'
-  return 'Job Seeker'
+  const labels = {
+    ROLE_ADMIN: 'Admin',
+    ROLE_COMPANY_ADMIN: 'Company Admin',
+    ROLE_RECRUITER: 'Recruiter',
+    ROLE_HR_MANAGER: 'HR Manager',
+    ROLE_HIRING_MANAGER: 'Hiring Manager',
+    ROLE_INTERVIEWER: 'Interviewer',
+    ROLE_TECHNICAL_LEAD: 'Technical Lead',
+    ROLE_SOURCER: 'Sourcer',
+    ROLE_DEPARTMENT_HEAD: 'Department Head',
+    ROLE_FINANCE_MANAGER: 'Finance Manager',
+    ROLE_MODERATOR: 'Moderator',
+    ROLE_SUPPORT_AGENT: 'Support Agent',
+    ROLE_FRESHER: 'Fresher',
+    ROLE_EXPERIENCED: 'Experienced Professional',
+  }
+  return labels[role] ?? 'Job Seeker'
 }
 
 function getRoleMode(value) {
   const role = String(value ?? '').toUpperCase()
-  if (role === 'ROLE_ADMIN') return 'admin'
-  if (role === 'ROLE_COMPANY_ADMIN') return 'admin'
-  if (role === 'ROLE_RECRUITER') return 'recruiter'
-  if (role === 'ROLE_HR_MANAGER') return 'recruiter'
-  if (role === 'ROLE_INTERVIEWER') return 'recruiter'
+  const managerRoles = ['ROLE_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_RECRUITER', 'ROLE_HR_MANAGER',
+    'ROLE_HIRING_MANAGER', 'ROLE_INTERVIEWER', 'ROLE_TECHNICAL_LEAD', 'ROLE_SOURCER',
+    'ROLE_DEPARTMENT_HEAD', 'ROLE_FINANCE_MANAGER', 'ROLE_MODERATOR', 'ROLE_SUPPORT_AGENT']
+  const adminRoles = ['ROLE_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_DEPARTMENT_HEAD']
+  if (adminRoles.includes(role)) return 'admin'
+  if (managerRoles.includes(role)) return 'recruiter'
   return 'seeker'
 }
 

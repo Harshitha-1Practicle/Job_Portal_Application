@@ -38,18 +38,33 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/jobs", "/api/jobs/**").permitAll()
-                // Job management
-                .requestMatchers(HttpMethod.POST, "/api/jobs", "/api/jobs/**").hasAnyRole("RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/jobs/**").hasAnyRole("RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").hasAnyRole("RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN")
-                // Application management
-                .requestMatchers(HttpMethod.POST, "/api/applications").hasAnyRole("JOB_SEEKER")
-                .requestMatchers(HttpMethod.PUT, "/api/applications/*/status").hasAnyRole("RECRUITER", "ADMIN", "HR_MANAGER", "INTERVIEWER", "COMPANY_ADMIN")
+                // Job management — post/edit/delete
+                .requestMatchers(HttpMethod.POST, "/api/jobs", "/api/jobs/**").hasAnyRole(
+                    "RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN",
+                    "HIRING_MANAGER", "DEPARTMENT_HEAD", "MODERATOR")
+                .requestMatchers(HttpMethod.PUT, "/api/jobs/**").hasAnyRole(
+                    "RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN",
+                    "HIRING_MANAGER", "DEPARTMENT_HEAD", "MODERATOR")
+                .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").hasAnyRole(
+                    "RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN",
+                    "HIRING_MANAGER", "DEPARTMENT_HEAD")
+                // Applications — submit
+                .requestMatchers(HttpMethod.POST, "/api/applications").hasAnyRole(
+                    "JOB_SEEKER", "FRESHER", "EXPERIENCED")
+                // Applications — update status
+                .requestMatchers(HttpMethod.PUT, "/api/applications/*/status").hasAnyRole(
+                    "RECRUITER", "ADMIN", "HR_MANAGER", "INTERVIEWER", "COMPANY_ADMIN",
+                    "HIRING_MANAGER", "TECHNICAL_LEAD", "DEPARTMENT_HEAD")
                 // Admin endpoints
-                .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
-                .requestMatchers("/api/recruiter/**").hasAnyRole("RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN", "COMPANY_ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
+                .requestMatchers("/api/admin/**").hasAnyRole(
+                    "ADMIN", "COMPANY_ADMIN", "DEPARTMENT_HEAD")
+                .requestMatchers("/api/recruiter/**").hasAnyRole(
+                    "RECRUITER", "ADMIN", "HR_MANAGER", "COMPANY_ADMIN",
+                    "HIRING_MANAGER", "SOURCER", "DEPARTMENT_HEAD")
+                .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole(
+                    "ADMIN", "COMPANY_ADMIN", "SUPPORT_AGENT", "DEPARTMENT_HEAD")
+                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole(
+                    "ADMIN", "COMPANY_ADMIN")
                 // Static + SPA
                 .requestMatchers("/", "/index.html", "/assets/**", "/favicon.svg",
                         "/sign-in", "/register", "/dashboard/**").permitAll()

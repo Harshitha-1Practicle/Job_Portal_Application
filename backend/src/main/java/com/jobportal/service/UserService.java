@@ -55,8 +55,11 @@ public class UserService implements UserDetailsService {
         if (userRepository.existsByEmail(normalizedEmail)) {
             throw new EmailAlreadyRegisteredException();
         }
-        if (request.getRole() == Role.ROLE_ADMIN || request.getRole() == Role.ROLE_COMPANY_ADMIN) {
-            throw new IllegalArgumentException("Admin accounts can only be provisioned by an administrator.");
+        if (request.getRole() == Role.ROLE_ADMIN
+                || request.getRole() == Role.ROLE_COMPANY_ADMIN
+                || request.getRole() == Role.ROLE_DEPARTMENT_HEAD
+                || request.getRole() == Role.ROLE_MODERATOR) {
+            throw new IllegalArgumentException("This account type can only be provisioned by an administrator.");
         }
 
         User user = new User();
